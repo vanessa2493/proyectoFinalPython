@@ -1,9 +1,14 @@
+# Import libraries
+
+import os
+
+
 # Create class Pelicula and CatalogoPelicula
 
 class Pelicula:
 
-    def __init__(self, nombrePelicula):
-        self.__nombrePelicula: nombrePelicula
+    def __init__(self, nombrePelicula: str):
+        self.__nombrePelicula = nombrePelicula
 
     def __str__(self):
         return f"nombrePelicula:{self.nombrePelicula}"
@@ -26,21 +31,28 @@ class CatalogoPelicula:
     def __str__(self):
         return f"nombreCatalogo:{self.nombreCatalogo}, ruta_archivo: {self.ruta_archivo}"
 
-    def crearCatalogo(self, nombreCatalogo: str):
+    def __crearCatalogo(self, nombreCatalogo: str):
         with open(f'{nombreCatalogo}.txt', 'a+') as file:
-            file.write(f'{self.ruta_archivo}\n')
+            file.write(f'{self.nombreCatalogo}\n')
 
-    def agregarPelicula(self):
+    def verificarExistenciaCatalogo(self):
+        if os.path.exists(f'{self.nombreCatalogo}.txt'):
+            print(True)
+        else:
+            self.__crearCatalogo(self.nombreCatalogo)
 
-        pass
+    def agregarPelicula(self, pelicula: Pelicula):
+
+        self.verificarExistenciaCatalogo()
+
+        with open(f'{self.nombreCatalogo}.txt', 'a+') as file:
+            file.write(f'{pelicula.nombrePelicula}\n')
 
     def listarPeliculas(self):
-        pass
+        with open(f'{self.nombreCatalogo}.txt', 'r') as file:
+            for line in file:
+                print(line.strip())
 
     def eliminarCatalogo(self):
-        pass
-
-
-catalogoPrueba = CatalogoPelicula("catalogo1")
-
-catalogoPrueba.crearCatalogo("catalogo1")
+        os.remove(f'{self.nombreCatalogo}.txt')
+        print(f'El Catálogo {self.nombreCatalogo} ha sido eliminado')
