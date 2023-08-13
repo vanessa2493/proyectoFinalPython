@@ -37,9 +37,10 @@ class CatalogoPelicula:
 
     def verificarExistenciaCatalogo(self):
         if os.path.exists(f'{self.nombreCatalogo}.txt'):
-            print(True)
+            print(f'El catálogo {self.nombreCatalogo} ya existe\n')
         else:
             self.__crearCatalogo(self.nombreCatalogo)
+            print(f'Se creó el catálogo: {self.nombreCatalogo}\n')
 
     def agregarPelicula(self, pelicula: Pelicula):
 
@@ -55,4 +56,11 @@ class CatalogoPelicula:
 
     def eliminarCatalogo(self):
         os.remove(f'{self.nombreCatalogo}.txt')
-        print(f'El Catálogo {self.nombreCatalogo} ha sido eliminado')
+        print(f'El catálogo {self.nombreCatalogo} ha sido eliminado\n')
+
+
+# catalogo = CatalogoPelicula("catalogo1")
+
+# catalogo.verificarExistenciaCatalogo()
+
+# catalogo.eliminarCatalogo()
